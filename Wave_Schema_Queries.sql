@@ -22,3 +22,11 @@ FROM public.agent_transactions
 INNER JOIN public.agents ON agents.agent_id = agent_transactions.agent_id
 WHERE agent_transactions.when_created > now() -INTERVAL '7 days'
 GROUP BY city;
+
+--Q7
+CREATE OR REPLACE VIEW atx_volume_city_summary AS
+SELECT COUNT(atx_id) AS volume, city, country
+FROM public.agent_transactions
+INNER JOIN public.agents ON agents.agent_id = agent_transactions.agent_id
+WHERE agent_transactions.when_created > now() -INTERVAL '7 days'
+GROUP BY city, country;
