@@ -30,3 +30,10 @@ FROM public.agent_transactions
 INNER JOIN public.agents ON agents.agent_id = agent_transactions.agent_id
 WHERE agent_transactions.when_created > now() -INTERVAL '7 days'
 GROUP BY city, country;
+
+--Q10
+SELECT transfers.source_wallet_id, sum( transfers.send_amount_scalar) AS total_sent FROM transfers
+WHERE send_amount_currency = 'CFA'
+    AND (transfers.when_created > (now() - INTERVAL '10 month'))
+    GROUP BY transfers.source_wallet_id
+    HAVING sum( transfers.send_amount_scalar)>10000000
